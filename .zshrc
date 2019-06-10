@@ -8,6 +8,7 @@ fi
 alias dc='docker-compose'
 alias docker-nuke='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker system prune -a -f --volumes'
 alias docker-rm='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 export HOMEBREW_GITHUB_API_TOKEN=""
 
 export NVM_DIR="$HOME/.nvm"
