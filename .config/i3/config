@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod1
+set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -205,5 +205,6 @@ bindsym $mod+d exec ~/run-rofi.sh
 
 exec "setxkbmap se"
 exec firefox-developer-edition
-exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
+# wget -P ~/Pictures/ -O wallpaper.jpg https://wallpapersite.com/images/wallpapers/annapurna-massif-3840x2160-himalayas-nepal-mountains-sunrise-minimal-8112.jpg
+exec_always feh --bg-fill ~/Pictures/wallpaper.jpg
 # exec compton
