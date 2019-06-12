@@ -7,6 +7,7 @@ set encoding=utf-8
 scriptencoding utf-8
 set guifont=Menlo:h13
 set linespace=4
+set nomodeline " Prevents things like: https://www.theregister.co.uk/2019/06/12/vim_remote_command_execution_flaw/
 
 
 
