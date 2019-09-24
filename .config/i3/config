@@ -200,8 +200,7 @@ bar {
 }
 
 bindsym $mod+shift+x exec i3lock --color "$bg-color"
-# bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
-bindsym $mod+d exec ~/run-rofi.sh
+bindsym $mod+d exec rofi -show run
 
 exec "setxkbmap se"
 exec firefox-developer-edition
