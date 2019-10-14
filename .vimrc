@@ -43,23 +43,30 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-abolish'
 	" Plug 'tpope/vim-vinegar'
-	Plug 'MarcWeber/vim-addon-mw-utils' " Snipmate dependency
-	Plug 'tomtom/tlib_vim' " Snipmate dependency
-	Plug 'SirVer/ultisnips' " UltiSnips
-	Plug 'honza/vim-snippets' " Snipmate snippets
+	" Plug 'MarcWeber/vim-addon-mw-utils' " Snipmate dependency
+	" Plug 'tomtom/tlib_vim' " Snipmate dependency
+	" Plug 'SirVer/ultisnips' " UltiSnips
+	" Plug 'honza/vim-snippets' " Snipmate snippets
 	Plug 'Galooshi/vim-import-js' "Auto import js.
 
-	function! BuildYCM(info)
-		" info is a dictionary with 3 fields
-		" - name:   name of the plugin
-		" - status: 'installed', 'updated', or 'unchanged'
-		" - force:  set on PlugInstall! or PlugUpdate!
-		if a:info.status == 'installed' || a:info.force
-			!./install.py
-		endif
-	endfunction
+	" function! BuildYCM(info)
+	" 	" info is a dictionary with 3 fields
+	" 	" - name:   name of the plugin
+	" 	" - status: 'installed', 'updated', or 'unchanged'
+	" 	" - force:  set on PlugInstall! or PlugUpdate!
+	" 	if a:info.status == 'installed' || a:info.force
+	" 		!./install.py
+	" 	endif
+	" endfunction
 
-	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
+	" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
+	if has('nvim')
+	  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	else
+	  Plug 'Shougo/deoplete.nvim'
+	  Plug 'roxma/nvim-yarp'
+	  Plug 'roxma/vim-hug-neovim-rpc'
+	endif
 	" cd ~/.vim/plugged/YouCompleteMe && ./install.py
 	Plug 'ervandew/supertab' " Supertab
 	Plug 'mattn/emmet-vim' " Emmet
@@ -72,10 +79,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'easymotion/vim-easymotion' "Easymotion
 	Plug 'vim-airline/vim-airline' " lean & mean status/tabline for vim that's light as air
 	Plug 'leafgarland/typescript-vim' " Typescript support
-	Plug 'vimwiki/vimwiki' " Vimwiki
+	Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Vimwiki
 	Plug 'Quramy/tsuquyomi' " Typescript
 	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 	" Plug 'neilagabriel/vim-geeknote' " Integration with geeknote
 	" https://github.com/VitaliyRodnenko/geeknote
 call plug#end()
@@ -110,6 +118,8 @@ set clipboard=unnamed " Set the default clipboard to the systems clipboard.
 set synmaxcol=300 " Disable syntax highlightning for rows larger than 300 cols.
 filetype plugin on " Enable plugins
 runtime macros/matchit.vim "Adds % jump between tags and if/else amongst other. 
+set path=.,src,node_nodules
+set suffixesadd=.js,.jsx
 
 
 
@@ -199,6 +209,9 @@ inoremap <c-j> <Down>
 inoremap <c-h> <Left>
 inoremap <c-l> <Right>
 
+" Snippets
+inoremap cl<Leader>    console.log();<Left><Left>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GUI and theme
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -253,19 +266,22 @@ let g:user_emmet_settings = {
 \}
 let g:user_emmet_leader_key=','
 " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
-let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
+" let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+" if !exists("g:ycm_semantic_triggers")
+"   let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers['typescript'] = ['.']
+let g:deoplete#enable_at_startup = 1
+" use tab to forward cycle
+inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
-let g:SuperTabDefaultCompletionType    = '<C-n>'
-let g:SuperTabCrMapping                = 0
+" let g:SuperTabDefaultCompletionType    = '<C-n>'
+" let g:SuperTabCrMapping                = 0
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 let g:ctrlp_custom_ignore = 'node_modules\|dist\|DS_Store\|git\|dojotoolkit\|build\'
 
@@ -300,7 +316,12 @@ let g:NERDTreeWinSize=40
 map <c-p> :FZF <CR>
 
 " VimWiki
-let g:vimwiki_list = [{'path': '~/wiki/', 'path_html': '~/wiki_html', 'syntax': 'markdown', 'ext': '.md' }]
+let g:vimwiki_list = [{'path': '~/wiki/', 
+	\'path_html': '~/wiki_html', 
+	\'syntax': 'markdown', 
+	\'ext': '.md' }]
+let g:vimwiki_markdown_link_ext = 1
+
 
 " Vim go
 let g:go_fmt_command = "goimports"
