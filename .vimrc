@@ -49,25 +49,25 @@ call plug#begin('~/.vim/plugged')
 	" Plug 'honza/vim-snippets' " Snipmate snippets
 	Plug 'Galooshi/vim-import-js' "Auto import js.
 
-	" function! BuildYCM(info)
-	" 	" info is a dictionary with 3 fields
-	" 	" - name:   name of the plugin
-	" 	" - status: 'installed', 'updated', or 'unchanged'
-	" 	" - force:  set on PlugInstall! or PlugUpdate!
-	" 	if a:info.status == 'installed' || a:info.force
-	" 		!./install.py
-	" 	endif
-	" endfunction
+	function! BuildYCM(info)
+		" info is a dictionary with 3 fields
+		" - name:   name of the plugin
+		" - status: 'installed', 'updated', or 'unchanged'
+		" - force:  set on PlugInstall! or PlugUpdate!
+		if a:info.status == 'installed' || a:info.force
+			!./install.py
+		endif
+	endfunction
 
-	" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
-	if has('nvim')
-	  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	else
-	  Plug 'Shougo/deoplete.nvim'
-	  Plug 'roxma/nvim-yarp'
-	  Plug 'roxma/vim-hug-neovim-rpc'
-	endif
-	" cd ~/.vim/plugged/YouCompleteMe && ./install.py
+	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
+	" if has('nvim')
+	"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	" else
+	"   Plug 'Shougo/deoplete.nvim'
+	"   Plug 'roxma/nvim-yarp'
+	"   Plug 'roxma/vim-hug-neovim-rpc'
+	" endif
+	" cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer
 	Plug 'ervandew/supertab' " Supertab
 	Plug 'mattn/emmet-vim' " Emmet
 	" Plug 'vim-multiple-cursors' " Multiple cursors (we have a bug where
@@ -79,6 +79,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'easymotion/vim-easymotion' "Easymotion
 	Plug 'vim-airline/vim-airline' " lean & mean status/tabline for vim that's light as air
 	Plug 'leafgarland/typescript-vim' " Typescript support
+	Plug 'ianks/vim-tsx' " Typescript in React
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Vimwiki
 	Plug 'Quramy/tsuquyomi' " Typescript
 	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
@@ -268,16 +269,14 @@ let g:user_emmet_leader_key=','
 " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
 " let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-" if !exists("g:ycm_semantic_triggers")
-"   let g:ycm_semantic_triggers = {}
-" endif
-" let g:ycm_semantic_triggers['typescript'] = ['.']
-let g:deoplete#enable_at_startup = 1
-" use tab to forward cycle
-inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+" let g:ycm_semantic_triggers['typescript,typescript.tsx'] = ['.']
+" let g:deoplete#enable_at_startup = 1
 
 " let g:SuperTabDefaultCompletionType    = '<C-n>'
-" let g:SuperTabCrMapping                = 0
+" let g:SuperTabCrMapping                = -1
 
 " let g:UltiSnipsExpandTrigger="<tab>"
 " let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -341,6 +340,29 @@ endfunc
 " Toggle relative linenumbers with ctrl+n
 nnoremap <C-n> :call NumberToggle()<cr>
 
+
+" function! Smart_TabComplete()
+"   let line = getline('.')                         " current line
+
+"   let substr = strpart(line, -1, col('.')+1)      " from the start of the current
+"                                                   " line to one character right
+"                                                   " of the cursor
+"   let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+"   if (strlen(substr)==0)                          " nothing to match on empty string
+"     return "\<tab>"
+"   endif
+"   let has_period = match(substr, '\.') != -1      " position of period, if any
+"   let has_slash = match(substr, '\/') != -1       " position of slash, if any
+"   if (!has_period && !has_slash)
+"     return "\<C-X>\<C-P>"                         " existing text matching
+"   elseif ( has_slash )
+"     return "\<C-X>\<C-F>"                         " file matching
+"   else
+"     return "\<C-X>\<C-O>"                         " plugin matching
+"   endif
+" endfunction
+
+" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommand Groups
