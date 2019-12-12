@@ -3,12 +3,17 @@
 
 # Custom
 if [ "$(uname 2> /dev/null)" = "Darwin" ]; then
-	alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+	# alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+	# alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
+	alias vim='nvim'
 fi
 alias dc='docker-compose'
 alias docker-nuke='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker system prune -a -f --volumes'
 alias docker-rm='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias alma='docker run --rm -it --privileged -v /dev:/dev -v /Volumes:/Volumes -v /run:/run -v pacman-cache:/var/cache/pacman -v $(pwd):/work darwish/alma alma'
+alias docker-preview='docker -H 52.178.221.208:2376 --tlsverify --tlscacert ~/certs/gryphon-preview/ca.pem --tlscert ~/certs/gryphon-preview/cert.pem --tlskey ~/certs/gryphon-preview/key.pem'
+alias gclean='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 export HOMEBREW_GITHUB_API_TOKEN=""
 
 export NVM_DIR="$HOME/.nvm"
