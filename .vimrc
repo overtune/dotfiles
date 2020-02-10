@@ -55,19 +55,19 @@ call plug#begin('~/.vim/plugged')
 		" - status: 'installed', 'updated', or 'unchanged'
 		" - force:  set on PlugInstall! or PlugUpdate!
 		if a:info.status == 'installed' || a:info.force
-			!./install.py
+			!./install.py --ts-completer
 		endif
 	endfunction
 
 	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
-	" if has('nvim')
-	"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	" else
-	"   Plug 'Shougo/deoplete.nvim'
-	"   Plug 'roxma/nvim-yarp'
-	"   Plug 'roxma/vim-hug-neovim-rpc'
-	" endif
-	" cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer
+	 " if has('nvim')
+	 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	 " else
+	 "   Plug 'Shougo/deoplete.nvim'
+	 "   Plug 'roxma/nvim-yarp'
+	 "   Plug 'roxma/vim-hug-neovim-rpc'
+	 " endif
+	 " cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer
 	Plug 'ervandew/supertab' " Supertab
 	Plug 'mattn/emmet-vim' " Emmet
 	" Plug 'vim-multiple-cursors' " Multiple cursors (we have a bug where
@@ -82,11 +82,15 @@ call plug#begin('~/.vim/plugged')
 	Plug 'ianks/vim-tsx' " Typescript in React
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Vimwiki
 	Plug 'Quramy/tsuquyomi' " Typescript
-	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
-	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'Shougo/vimproc.vim', {'do' : 'make'} " Interactive command execution in Vim. (Needed for tsuquyomi)  
+	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/1.x', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
+	" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'hail2u/vim-css3-syntax' " CSS3 syntax (for Styled components)
 	Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 	" Plug 'neilagabriel/vim-geeknote' " Integration with geeknote
 	" https://github.com/VitaliyRodnenko/geeknote
+	" Plug 'vim-syntastic/syntastic' " 
+	Plug 'jxnblk/vim-mdx-js' " MDX support
 call plug#end()
 
 
@@ -121,6 +125,7 @@ filetype plugin on " Enable plugins
 runtime macros/matchit.vim "Adds % jump between tags and if/else amongst other. 
 set path=.,src,node_nodules
 set suffixesadd=.js,.jsx
+set spelllang=en_us
 
 
 
@@ -151,6 +156,12 @@ nnoremap <silent> ]B :blast<CR>
  
 " Shortcut to rapidly toggle 'set list'
 nmap <leader>l :set list!<CR>
+
+" Shortcut to toggle 'set spell'
+nmap <leader>c :set spell!<CR>
+nmap <leader>cj m']s'<CR>
+nmap <leader>ck m'[s'<CR>
+nmap <leader>cc m'z='<CR>
 
 " jj for Esc
 imap jj <Esc>
@@ -323,7 +334,13 @@ let g:vimwiki_markdown_link_ext = 1
 
 
 " Vim go
-let g:go_fmt_command = "goimports"
+" let g:go_fmt_command = "goimports"
+
+" Tsuquyomi
+let g:tsuquyomi_use_vimproc = 1
+nmap <leader>f :TsuQuickFix<cr>
+autocmd BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers toggle function
