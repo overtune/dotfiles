@@ -68,7 +68,7 @@ call plug#begin('~/.vim/plugged')
 	 "   Plug 'roxma/vim-hug-neovim-rpc'
 	 " endif
 	 " cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer
-	Plug 'ervandew/supertab' " Supertab
+	" Plug 'ervandew/supertab' " Supertab
 	Plug 'mattn/emmet-vim' " Emmet
 	" Plug 'vim-multiple-cursors' " Multiple cursors (we have a bug where
 	" first space press enters insert mode)
@@ -364,6 +364,39 @@ let g:tsuquyomi_use_vimproc = 1
 nmap <leader>f :YcmCompleter FixIt<cr>
 autocmd BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
 
+" Coc
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers toggle function
