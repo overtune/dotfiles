@@ -1,6 +1,6 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Defaults
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible " Run in Vim mode
 set encoding=utf-8
@@ -59,7 +59,7 @@ call plug#begin('~/.vim/plugged')
 		endif
 	endfunction
 
-	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
+	" Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
 	 " if has('nvim')
 	 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	 " else
@@ -91,8 +91,23 @@ call plug#begin('~/.vim/plugged')
 	" https://github.com/VitaliyRodnenko/geeknote
 	" Plug 'vim-syntastic/syntastic' " 
 	Plug 'jxnblk/vim-mdx-js' " MDX support
-call plug#end()
+	Plug 'mindriot101/vim-yapf' " Python formatter
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" :CocInstall coc-json coc-tsserver coc-tailwindcss
 
+	" if has('nvim')
+	"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	" else
+	"   Plug 'Shougo/deoplete.nvim'
+	"   Plug 'roxma/nvim-yarp'
+	"   Plug 'roxma/vim-hug-neovim-rpc'
+	" endif
+	" Plug 'HerringtonDarkholme/yats.vim'
+  " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+ " For async completion
+ " For Denite features
+  " Plug 'Shougo/denite.nvim'
+call plug#end()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -126,6 +141,8 @@ runtime macros/matchit.vim "Adds % jump between tags and if/else amongst other.
 set path=.,src,node_nodules
 set suffixesadd=.js,.jsx
 set spelllang=en_us
+set foldmethod=syntax " Use syntax for folding
+set nofoldenable " Don't fold by default
 
 
 
@@ -221,8 +238,13 @@ inoremap <c-j> <Down>
 inoremap <c-h> <Left>
 inoremap <c-l> <Right>
 
+" Folding
+nnoremap ff za
+
 " Snippets
 inoremap cl<Leader>    console.log();<Left><Left>
+
+autocmd FileType python nmap <buffer> <Leader>p :call Yapf()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GUI and theme
@@ -283,6 +305,7 @@ let g:user_emmet_leader_key=','
 if !exists("g:ycm_semantic_triggers")
   let g:ycm_semantic_triggers = {}
 endif
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
 " let g:ycm_semantic_triggers['typescript,typescript.tsx'] = ['.']
 " let g:deoplete#enable_at_startup = 1
 
@@ -338,7 +361,7 @@ let g:vimwiki_markdown_link_ext = 1
 
 " Tsuquyomi
 let g:tsuquyomi_use_vimproc = 1
-nmap <leader>f :TsuQuickFix<cr>
+nmap <leader>f :YcmCompleter FixIt<cr>
 autocmd BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
 
 
@@ -394,7 +417,7 @@ augroup END
 " Use iA Writer to preview markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:setupMarkdownPreview()
-  nnoremap <leader>P :silent !open -a Markoff.app '%:p'<cr>
+  nnoremap <leader>P :silent !open -a iA\ Writer.app '%:p'<cr>
 endfunction
 
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkdownPreview()
