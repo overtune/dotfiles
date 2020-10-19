@@ -93,7 +93,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'jxnblk/vim-mdx-js' " MDX support
 	Plug 'mindriot101/vim-yapf' " Python formatter
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	" :CocInstall coc-json coc-tsserver coc-tailwindcss
+	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir
+	Plug 'elixir-editors/vim-elixir' " Elixir syntax highlighting
 
 	" if has('nvim')
 	"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
