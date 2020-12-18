@@ -26,52 +26,19 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
-	" Plug 'altercation/vim-colors-solarized' " Great colorscheme
 	Plug 'joshdick/onedark.vim' " A dark Vim/Neovim color scheme inspired by Atom's One Dark syntax theme.
-	" Plug 'kien/ctrlp.vim' " Fast file lookup
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
 	Plug 'pangloss/vim-javascript', { 'for': 'javascript' }  " Better javascript support for Vim
 	Plug 'mxw/vim-jsx' " Reactjs plugin
 	Plug 'elzr/vim-json' " Json plugin
 	Plug 'heavenshell/vim-jsdoc' " JSDoc plugin
 	Plug 'chr4/nginx.vim' " Nginx syntax plugin
-	" Plug 'alvan/vim-closetag'
-	" Plug 'Townk/vim-autoclose'
-	" Plug 'Raimondi/delimitMate' " Autoclose plugin
 	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-abolish'
-	" Plug 'tpope/vim-vinegar'
-	" Plug 'MarcWeber/vim-addon-mw-utils' " Snipmate dependency
-	" Plug 'tomtom/tlib_vim' " Snipmate dependency
-	" Plug 'SirVer/ultisnips' " UltiSnips
-	" Plug 'honza/vim-snippets' " Snipmate snippets
 	Plug 'Galooshi/vim-import-js' "Auto import js.
-
-	function! BuildYCM(info)
-		" info is a dictionary with 3 fields
-		" - name:   name of the plugin
-		" - status: 'installed', 'updated', or 'unchanged'
-		" - force:  set on PlugInstall! or PlugUpdate!
-		if a:info.status == 'installed' || a:info.force
-			!./install.py --ts-completer
-		endif
-	endfunction
-
-	" Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') } " Autocomplete
-	 " if has('nvim')
-	 "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	 " else
-	 "   Plug 'Shougo/deoplete.nvim'
-	 "   Plug 'roxma/nvim-yarp'
-	 "   Plug 'roxma/vim-hug-neovim-rpc'
-	 " endif
-	 " cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer
-	" Plug 'ervandew/supertab' " Supertab
 	Plug 'mattn/emmet-vim' " Emmet
-	" Plug 'vim-multiple-cursors' " Multiple cursors (we have a bug where
-	" first space press enters insert mode)
 	Plug 'mileszs/ack.vim' " Search with the silver searcher
 	Plug 'mustache/vim-mustache-handlebars' " Handlebars plugin
 	Plug 'scrooloose/nerdtree' " Nerd tree
@@ -84,30 +51,15 @@ call plug#begin('~/.vim/plugged')
 	Plug 'Quramy/tsuquyomi' " Typescript
 	Plug 'Shougo/vimproc.vim', {'do' : 'make'} " Interactive command execution in Vim. (Needed for tsuquyomi)  
 	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/1.x', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
-	" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 	Plug 'hail2u/vim-css3-syntax' " CSS3 syntax (for Styled components)
 	Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-	" Plug 'neilagabriel/vim-geeknote' " Integration with geeknote
-	" https://github.com/VitaliyRodnenko/geeknote
-	" Plug 'vim-syntastic/syntastic' " 
 	Plug 'jxnblk/vim-mdx-js' " MDX support
 	Plug 'mindriot101/vim-yapf' " Python formatter
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir
+	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir coc-pyright
 	Plug 'elixir-editors/vim-elixir' " Elixir syntax highlighting
+	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'} " Python syntax highlighting
 
-	" if has('nvim')
-	"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	" else
-	"   Plug 'Shougo/deoplete.nvim'
-	"   Plug 'roxma/nvim-yarp'
-	"   Plug 'roxma/vim-hug-neovim-rpc'
-	" endif
-	" Plug 'HerringtonDarkholme/yats.vim'
-  " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
- " For async completion
- " For Denite features
-  " Plug 'Shougo/denite.nvim'
 call plug#end()
 
 
