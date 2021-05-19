@@ -302,8 +302,8 @@ let g:NERDTreeWinSize=40
 map <c-p> :FZF <CR>
 
 " VimWiki
-let g:vimwiki_list = [{'path': '~/wiki/', 
-	\'path_html': '~/wiki_html', 
+let g:vimwiki_list = [{'path': '~/Documents/wiki/', 
+	\'path_html': '~/Documents/wiki_html', 
 	\'syntax': 'markdown', 
 	\'ext': '.md' }]
 let g:vimwiki_markdown_link_ext = 1
@@ -393,11 +393,17 @@ nnoremap <C-n> :call NumberToggle()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommand Groups
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup markdown
-au! BufRead ~/wiki/index.md !git --git-dir ~/wiki/.git pull
-au! BufWritePost ~/wiki/* !cd ~/wiki;git add "%";git commit -m "Auto commit of %:t." "%";git push
-augroup END
+" augroup markdown
+" au! BufRead ~/wiki/index.md !git --git-dir ~/wiki/.git pull
+" au! BufWritePost ~/wiki/* !cd ~/wiki;git add "%";git commit -m "Auto commit of %:t." "%";git push
+" augroup END
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Commands 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Generate typescript interfaces from json with quicktype
+vnoremap <leader>T :!quicktype -l ts --just-types<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use iA Writer to preview markdown
