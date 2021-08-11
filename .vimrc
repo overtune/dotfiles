@@ -198,7 +198,7 @@ nnoremap ff za
 
 " Snippets
 inoremap cl<Leader>    console.log();<Left><Left>
-inoremap clsx<Leader>    import clsx from 'clsx';
+inoremap clsx<Leader>    import clsx from 'clsx';<ESC>
 
 autocmd FileType python nmap <buffer> <Leader>p :call Yapf()<cr>
 
