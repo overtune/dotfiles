@@ -17,6 +17,7 @@ alias gclean='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias o="~/scripts/open-project.sh"
 alias ol="ls ~/Development/work"
 export HOMEBREW_GITHUB_API_TOKEN=""
+export DOCS_PATH=/Users/johrun/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Docs/
 
 # if [ -f /etc/profile ]; then
 #     PATH=""
