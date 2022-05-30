@@ -408,6 +408,10 @@ nnoremap <C-n> :call NumberToggle()<cr>
 " Generate typescript interfaces from json with quicktype
 vnoremap <leader>T :!quicktype -l ts --just-types<cr>
 
+" List all TODOs in quickwindow 
+command Todo :vim TODO % | cw 
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use iA Writer to preview markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
