@@ -50,16 +50,21 @@ call plug#begin('~/.vim/plugged')
 	Plug 'vimwiki/vimwiki', { 'branch': 'dev' } " Vimwiki
 	Plug 'Quramy/tsuquyomi' " Typescript
 	Plug 'Shougo/vimproc.vim', {'do' : 'make'} " Interactive command execution in Vim. (Needed for tsuquyomi)  
-	Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/1.x', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars'] }
+	" Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release/1.x', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html', 'hbs', 'handlebars', 'mdx'] }
+	" Plug 'prettier/vim-prettier', {'do': 'yarn install', 'branch': 'release' }
+	Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production'}
 	Plug 'hail2u/vim-css3-syntax' " CSS3 syntax (for Styled components)
 	Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 	Plug 'jxnblk/vim-mdx-js' " MDX support
 	Plug 'mindriot101/vim-yapf' " Python formatter
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir coc-pyright
+	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir coc-pyright coc-rust-analyzer
 	Plug 'elixir-editors/vim-elixir' " Elixir syntax highlighting
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'} " Python syntax highlighting
-
+	Plug 'wuelnerdotexe/vim-astro' " Astro plugin
+	Plug 'whiteinge/diffconflicts' " Diff conflicts
+	Plug 'pantharshit00/vim-prisma' " Prisma
+	Plug 'rust-lang/rust.vim' " Rust
 call plug#end()
 
 
@@ -332,12 +337,17 @@ else
 endif
 
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -353,6 +363,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Rust
+let g:rustfmt_autosave = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers toggle function
@@ -410,6 +423,9 @@ vnoremap <leader>T :!quicktype -l ts --just-types<cr>
 
 " List all TODOs in quickwindow 
 command Todo :vim TODO % | cw 
+
+" Prettier raw
+nnoremap <leader>pp :silent %!prettier --stdin-filepath %<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
