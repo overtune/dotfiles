@@ -65,6 +65,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'whiteinge/diffconflicts' " Diff conflicts
 	Plug 'pantharshit00/vim-prisma' " Prisma
 	Plug 'rust-lang/rust.vim' " Rust
+	Plug 'cespare/vim-toml', { 'branch': 'main' } " toml
 call plug#end()
 
 
