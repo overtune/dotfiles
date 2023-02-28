@@ -60,12 +60,15 @@ call plug#begin('~/.vim/plugged')
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir coc-pyright coc-rust-analyzer
 	Plug 'elixir-editors/vim-elixir' " Elixir syntax highlighting
+	Plug 'mhinz/vim-mix-format' " Elixir formatter
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'} " Python syntax highlighting
 	Plug 'wuelnerdotexe/vim-astro' " Astro plugin
 	Plug 'whiteinge/diffconflicts' " Diff conflicts
 	Plug 'pantharshit00/vim-prisma' " Prisma
 	Plug 'rust-lang/rust.vim' " Rust
 	Plug 'cespare/vim-toml', { 'branch': 'main' } " toml
+	Plug 'othree/html5.vim' " Dependency for vim-svelte
+	Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
 
@@ -368,6 +371,9 @@ nmap <silent> gr <Plug>(coc-references)
 " Rust
 let g:rustfmt_autosave = 1
 
+" Elixir
+let g:mix_format_on_save = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers toggle function
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -437,6 +443,9 @@ function! s:setupMarkdownPreview()
 endfunction
 
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkdownPreview()
+au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
+au BufRead,BufNewFile mix.lock set filetype=elixir
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Notes
