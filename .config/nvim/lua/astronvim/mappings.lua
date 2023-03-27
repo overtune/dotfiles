@@ -63,15 +63,6 @@ maps.n["<b"] = {
   function() require("astronvim.utils.buffer").move(-(vim.v.count > 0 and vim.v.count or 1)) end,
   desc = "Move buffer tab left",
 }
-maps.n["<leader>jj"] ={
-  function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-  desc = "Previous buffer",
-}
-
-maps.n["<leader>kk"] =
-  { function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" }
-
-
 
 maps.n["<leader>b"] = sections.b
 maps.n["<leader>bc"] =
