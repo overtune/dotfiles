@@ -61,6 +61,7 @@ call plug#begin('~/.vim/plugged')
 	" :CocInstall coc-json coc-tsserver coc-tailwindcss coc-elixir coc-pyright coc-rust-analyzer
 	Plug 'elixir-editors/vim-elixir' " Elixir syntax highlighting
 	Plug 'mhinz/vim-mix-format' " Elixir formatter
+	Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'} " Python syntax highlighting
 	Plug 'wuelnerdotexe/vim-astro' " Astro plugin
 	Plug 'whiteinge/diffconflicts' " Diff conflicts

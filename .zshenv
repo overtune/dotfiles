@@ -5,3 +5,4 @@ camelcase() {
 pascalcase() {
     perl -pe 's#(-|^)(.)#\u$2#g'
 }
+. "$HOME/.cargo/env"
