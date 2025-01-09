@@ -75,10 +75,10 @@ vim.keymap.set("n", "<space>e", "<cmd>NvimTreeToggle<cr>", { desc = "Open NvimTr
 vim.keymap.set("i", "jj", "<esc>", { desc = "Exit insert mode" })
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+vim.keymap.set("n", "<leader>kk", "<cmd>bnext<cr>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>jj", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 
 vim.api.nvim_create_user_command("ReloadConfig", "source $MYVIMRC", {})
 
