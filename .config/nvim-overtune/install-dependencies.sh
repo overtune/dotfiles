@@ -1,9 +1,13 @@
-npm i -g neovim
-npm i -g vscode-langservers-extracted
-npm i -g @astrojs/language-server
-npm i -g svelte-language-server
-npm i -g tailwindcss-language-server
+#!/usr/bin/env bash
+set -euo pipefail
 
-brew install wget
-brew install fd
-brew install ripgrep
+# Node host provider for nvim (vim.g.loaded_node_provider).
+# Not a language server — must live outside Mason.
+npm i -g neovim
+
+# System CLIs used by Telescope / general work.
+brew install wget fd ripgrep
+
+# Language servers, formatters, and linters are managed by Mason via
+# mason-tool-installer.nvim (see lua/plugins/enabled/mason.lua).
+# On first nvim launch they install automatically; or run :MasonToolsUpdate.

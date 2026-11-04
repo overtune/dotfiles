@@ -1,3 +1,18 @@
+local function js_formatters(bufnr)
+	local biome_config = vim.fs.find(
+		{ "biome.json", "biome.jsonc" },
+		{ path = vim.api.nvim_buf_get_name(bufnr), upward = true, type = "file" }
+	)
+	if #biome_config > 0 then
+		return { "biome" }
+	end
+	return { "prettierd", "prettier", stop_after_first = true }
+end
+
+local function markup_formatters()
+	return { "prettierd", "prettier", stop_after_first = true }
+end
+
 return {
 	{ -- Autoformat
 		"stevearc/conform.nvim",
@@ -33,11 +48,18 @@ return {
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
-				-- Conform can also run multiple formatters sequentially
-				-- python = { "isort", "black" },
-				--
-				-- You can use 'stop_after_first' to run the first available formatter from the list
-				-- javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascript = js_formatters,
+				typescript = js_formatters,
+				javascriptreact = js_formatters,
+				typescriptreact = js_formatters,
+				json = js_formatters,
+				jsonc = js_formatters,
+				css = js_formatters,
+				svelte = markup_formatters,
+				astro = markup_formatters,
+				html = markup_formatters,
+				markdown = markup_formatters,
+				yaml = markup_formatters,
 			},
 		},
 	},
