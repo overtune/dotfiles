@@ -1,5 +1,5 @@
-# Dotfiles deployed by mise. Run from this directory:
-#   mise trust && mise dot apply
+# Dotfiles for this machine, managed by mise. Run from this directory.
+# New machine: `mise trust && mise bootstrap` (see README).
 # Sources are relative to this file; default mode is symlink.
 
 [dotfiles]
@@ -8,3 +8,49 @@
 "~/.tmux.conf"             = { source = "tmux/tmux.conf" }
 "~/.config/nvim-overtune"  = { source = "nvim-overtune" }
 "~/.config/mise/config.toml" = { source = "mise/config.toml" }
+
+# `mise bootstrap` sets up a new machine: installs packages, clones repos,
+# then deploys [dotfiles]. Safe to re-run; anything already in place is
+# left alone. Preview with `mise bootstrap --dry-run`.
+
+[bootstrap.repos]
+"~/.oh-my-zsh"       = { url = "https://github.com/ohmyzsh/ohmyzsh.git" }
+"~/.tmux-themepack"  = { url = "https://github.com/jimeh/tmux-themepack.git" }
+
+[bootstrap.packages]
+"brew:azure-cli" = "latest"
+"brew:fd" = "latest"
+"brew:fff" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:fnm" = "latest"
+"brew:fzf" = "latest"
+"brew:gh" = "latest"
+"brew:go" = "latest"
+"brew:helm" = "latest"
+"brew:k3d" = "latest"
+"brew:k6" = "latest"
+"brew:kubeconform" = "latest"
+"brew:lazydocker" = "latest"
+"brew:lazygit" = "latest"
+"brew:luarocks" = "latest"
+"brew:neovim" = "latest"
+"brew:nnn" = "latest"
+"brew:opencode" = "latest"
+"brew:pandoc" = "latest"
+"brew:ripgrep" = "latest"
+"brew:poppler" = "latest"
+"brew:tectonic" = "latest"
+"brew:thefuck" = "latest"
+"brew:tmux" = "latest"
+"brew:tree-sitter" = "latest"
+"brew:tree-sitter-cli" = "latest"
+"brew:wget" = "latest"
+
+"brew-cask:claude-devtools" = "latest"
+"brew-cask:docker-desktop" = "latest"
+"brew-cask:git-credential-manager" = "latest"
+"brew-cask:iterm2" = "latest"
+"brew-cask:mitmproxy" = "latest"
+"brew-cask:pgadmin4" = "latest"
+"brew-cask:raycast" = "latest"
+"brew-cask:visual-studio-code" = "latest"
