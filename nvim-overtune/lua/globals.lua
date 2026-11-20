@@ -20,7 +20,6 @@ vim.opt.mouse = "a"
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
-vim.opt.breakindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
@@ -46,7 +45,6 @@ vim.opt.smartcase = true
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
--- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
 
 -- Sets how neovim will display certain whitespace characters in the editor.
@@ -63,3 +61,13 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Show diagnostics next to the code (off by default since Nvim 0.11).
+vim.diagnostic.config({ virtual_text = true, severity_sort = true })
+
+-- No plugins here are written in Node, Python, Perl or Ruby, so skip
+-- loading those hosts (and the :checkhealth warnings about them).
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0

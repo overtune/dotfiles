@@ -5,17 +5,27 @@ return {
 		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			-- Installs the parsers (asynchronously, no-op if already installed)
+			-- Installs the parsers (asynchronously, no-op if already installed).
+			-- Needs the tree-sitter CLI, which `mise bootstrap` installs.
 			require("nvim-treesitter").install({
-				"elixir",
-				"eex",
-				"heex",
-				"vim",
-				"lua",
-				"vimdoc",
-				"html",
+				"astro",
+				"bash",
 				"css",
+				"eex",
+				"elixir",
+				"heex",
+				"html",
+				"javascript",
+				"json",
+				"lua",
+				"markdown",
+				"markdown_inline",
 				"svelte",
+				"tsx",
+				"typescript",
+				"vim",
+				"vimdoc",
+				"yaml",
 			})
 
 			-- The main branch does not enable highlighting or indentation automatically
