@@ -45,10 +45,10 @@ exec zsh
 
 Things `mise bootstrap` does not cover:
 
-- **Node:** fnm manages Node, but no version is installed yet. Run
-  `fnm install --lts` (the first version you install becomes the default).
-- **nvim dependencies:** run `nvim-overtune/install-dependencies.sh` (needs
-  Node). Language servers install through Mason on the first nvim start.
+- **Node for projects:** mise installs the global Node version and switches
+  to a project's `.nvmrc` / `.node-version` on `cd`, but does not download
+  versions on `cd`. Run `mise install` in a project the first time.
+- **nvim dependencies:** run `nvim-overtune/install-dependencies.sh`. Language servers install through Mason on the first nvim start.
 - **Casks from third-party taps:** `brew install --cask simpel/tap/ruler`.
 - **SSH and git config:** `~/.ssh/config`, the SSH keys and `~/.gitconfig`
   are not in this repo. Set them up as described under

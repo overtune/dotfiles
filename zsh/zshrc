@@ -17,9 +17,9 @@ alias dc='docker-compose'
 alias docker-nuke='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker system prune -a -f --volumes'
 alias docker-rm='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias ol="ls ~/Development/work"
-alias nu="fnm use"
-alias nd="fnm use default"
 
+export EDITOR='env NVIM_APPNAME=nvim-overtune nvim'
+export VISUAL="$EDITOR"
 export DOCS_PATH="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Docs/"
 
 # --- Functions -------------------------------------------------------------
@@ -37,12 +37,10 @@ fuck() {
 }
 
 # --- Tools -----------------------------------------------------------------
-# Node version manager: fnm (https://github.com/Schniz/fnm).
-# `--use-on-cd` auto-switches versions when entering a dir with .nvmrc / .node-version.
-eval "$(fnm env --use-on-cd --shell zsh)"
-
 export PATH="$HOME/.local/bin:$PATH"
 # LM Studio CLI (lms)
 export PATH="$PATH:$HOME/.lmstudio/bin"
 
+# mise manages Node and other runtimes, and switches versions on cd
+# (it reads .nvmrc / .node-version, see ~/.config/mise/config.toml).
 eval "$(mise activate zsh)"

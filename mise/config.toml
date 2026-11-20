@@ -1,3 +1,8 @@
+[settings]
+# Read .nvmrc / .node-version, so `cd` into a project switches Node.
+idiomatic_version_file_enable_tools = ["node"]
+
 [tools]
 elixir = "1.20.4-otp-29"
 erlang = "29.1.2"
+node = "24"
