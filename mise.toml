@@ -1,0 +1,11 @@
+# Dotfiles deployed by mise. Run from this directory:
+#   mise trust && mise dot apply
+# Sources are relative to this file; default mode is symlink.
+
+[dotfiles]
+"~/.zshrc"                 = { source = "zsh/zshrc" }
+"~/.zshenv"                = { source = "zsh/zshenv" }
+"~/.tmux.conf"             = { source = "tmux/tmux.conf" }
+"~/.tmux-osx.conf"         = { source = "tmux/tmux-osx.conf" }
+"~/.config/nvim-overtune"  = { source = "nvim-overtune" }
+"~/.config/mise/config.toml" = { source = "mise/config.toml" }
