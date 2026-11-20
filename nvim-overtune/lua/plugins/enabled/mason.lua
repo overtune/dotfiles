@@ -1,3 +1,6 @@
+-- Mason installs language servers and formatters into Neovim's data dir.
+-- mason-tool-installer installs everything below on startup, so a new
+-- machine needs no manual steps. Update with :MasonToolsUpdate.
 return {
 	{ "mason-org/mason.nvim", opts = {} },
 	{
@@ -5,20 +8,22 @@ return {
 		dependencies = { "mason-org/mason.nvim" },
 		opts = {
 			ensure_installed = {
-				-- LSP servers
-				"lua-language-server",
-				"html-lsp",
-				"css-lsp",
-				"json-lsp",
+				-- Language servers (enabled in nvim-lspconfig.lua)
 				"astro-language-server",
+				"css-lsp",
+				"eslint-lsp",
+				"expert",
+				"html-lsp",
+				"json-lsp",
+				"lua-language-server",
 				"svelte-language-server",
 				"tailwindcss-language-server",
 				"typescript-language-server",
-				-- Formatters / linters
-				"stylua",
+				-- Formatters (used by conform.lua)
+				"biome",
 				"prettier",
 				"prettierd",
-				"biome",
+				"stylua",
 			},
 			run_on_start = true,
 		},

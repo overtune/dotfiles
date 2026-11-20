@@ -1,6 +1,7 @@
--- [[ Include global settings and keymaps ]]
+-- [[ Include global settings, keymaps and completion ]]
 require("globals")
 require("keymap")
+require("completion")
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -25,5 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require("lazy").setup("plugins/enabled")
-require("lualine").setup()
+require("lazy").setup("plugins/enabled", {
+	-- No plugin here needs luarocks.
+	rocks = { enabled = false },
+})
