@@ -17,8 +17,8 @@ alias docker-preview='docker -H 52.178.221.208:2376 --tlsverify --tlscacert ~/ce
 alias gclean='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 alias o="~/scripts/open-project.sh"
 alias ol="ls ~/Development/work"
-alias nu="nvm use"
-alias nd="nvm use default"
+alias nu="fnm use"
+alias nd="fnm use default"
 alias v='NVIM_APPNAME="nvim-overtune" nvim'
 export HOMEBREW_GITHUB_API_TOKEN=""
 export DOCS_PATH=/Users/johrun/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Docs/
@@ -108,6 +108,18 @@ plugins=(
   asdf
 )
 
+# Skip oh-my-zsh's insecure-directory audit (saves ~50-100ms).
+ZSH_DISABLE_COMPFIX=true
+# Run compinit once per day; reuse the cached dump on subsequent shells.
+autoload -Uz compinit
+_zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -n "$_zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+unset _zcompdump
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -141,7 +153,12 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval $(thefuck --alias)
+# Lazy-load thefuck: avoid spawning Python on every shell start.
+fuck() {
+  unset -f fuck
+  eval "$(thefuck --alias)"
+  fuck "$@"
+}
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # alias python=/opt/homebrew/bin/python3
 
@@ -153,12 +170,30 @@ export PATH="$PNPM_HOME:$PATH"
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
-# see: https://superuser.com/a/1611283
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# Node version manager: fnm (https://github.com/Schniz/fnm).
+# Replaces nvm + lazy-load wrappers — fnm starts in ~5–20 ms so eager init is fine,
+# and it avoids the Claude Code shell-snapshot issue where underscore-prefixed
+# helper functions weren't captured, breaking lazy-loaded node/npm.
+# `--use-on-cd` auto-switches versions when entering a dir with .nvmrc / .node-version.
+eval "$(fnm env --use-on-cd --shell zsh)"
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Old nvm lazy-load block — kept for reference, remove once fnm is settled in.
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# _nvm_lazy_load() {
+#   unset -f nvm node npm npx yarn pnpm 2>/dev/null
+#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# }
+# for _cmd in nvm node npm npx yarn pnpm; do
+#   eval "${_cmd}() { _nvm_lazy_load; ${_cmd} \"\$@\"; }"
+# done
+# unset _cmd
 
 
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/johanrunesson/.lmstudio/bin"
+# End of LM Studio CLI section
+
+eval "$(mise activate zsh)"
