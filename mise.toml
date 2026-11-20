@@ -6,7 +6,7 @@
 "~/.zshrc"                 = { source = "zsh/zshrc" }
 "~/.zshenv"                = { source = "zsh/zshenv" }
 "~/.tmux.conf"             = { source = "tmux/tmux.conf" }
-"~/.config/nvim-overtune"  = { source = "nvim-overtune" }
+"~/.config/nvim"           = { source = "nvim" }
 "~/.config/mise/config.toml" = { source = "mise/config.toml" }
 
 # `mise bootstrap` sets up a new machine: installs packages, clones repos,

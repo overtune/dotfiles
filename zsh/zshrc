@@ -12,13 +12,13 @@ source "$ZSH/oh-my-zsh.sh"
 
 # --- Aliases ---------------------------------------------------------------
 alias vim='nvim'
-alias v='NVIM_APPNAME="nvim-overtune" nvim'
+alias v='nvim'
 alias dc='docker-compose'
 alias docker-nuke='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) && docker system prune -a -f --volumes'
 alias docker-rm='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias ol="ls ~/Development/work"
 
-export EDITOR='env NVIM_APPNAME=nvim-overtune nvim'
+export EDITOR='nvim'
 export VISUAL="$EDITOR"
 export DOCS_PATH="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Docs/"
 

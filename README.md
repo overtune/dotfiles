@@ -4,12 +4,12 @@ My macOS dotfiles, managed with [mise](https://mise.jdx.dev/dotfiles.html).
 The repo is the source of truth: mise symlinks each file into place, so
 editing `~/.zshrc` edits `zsh/zshrc` here. Commit and push as usual.
 
-| Folder           | Deployed to                                                                        |
-| ---------------- | ---------------------------------------------------------------------------------- |
-| `zsh/`           | `~/.zshrc`, `~/.zshenv`                                                            |
-| `tmux/`          | `~/.tmux.conf`                                                                     |
-| `nvim-overtune/` | `~/.config/nvim-overtune` (run with `NVIM_APPNAME=nvim-overtune nvim`, alias `v`) |
-| `mise/`          | `~/.config/mise/config.toml` (global tools)                                        |
+| Folder  | Deployed to                                   |
+| ------- | --------------------------------------------- |
+| `zsh/`  | `~/.zshrc`, `~/.zshenv`                       |
+| `tmux/` | `~/.tmux.conf`                                |
+| `nvim/` | `~/.config/nvim` (Neovim 0.12+, aliases `v`, `vim`) |
+| `mise/` | `~/.config/mise/config.toml` (global tools)   |
 
 Everything is declared in [`mise.toml`](mise.toml): the `[dotfiles]` mapping,
 plus the Homebrew packages and git repos that `mise bootstrap` installs.
@@ -48,7 +48,8 @@ Things `mise bootstrap` does not cover:
 - **Node for projects:** mise installs the global Node version and switches
   to a project's `.nvmrc` / `.node-version` on `cd`, but does not download
   versions on `cd`. Run `mise install` in a project the first time.
-- **nvim dependencies:** run `nvim-overtune/install-dependencies.sh`. Language servers install through Mason on the first nvim start.
+- **nvim:** nothing to do. On the first start lazy.nvim installs the plugins
+  and Mason the language servers and formatters (Node must be available).
 - **Casks from third-party taps:** `brew install --cask simpel/tap/ruler`.
 - **SSH and git config:** `~/.ssh/config`, the SSH keys and `~/.gitconfig`
   are not in this repo. Set them up as described under
