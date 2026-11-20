@@ -1,7 +1,6 @@
--- [[ Include global settings, keymaps and completion ]]
+-- [[ Include global settings and keymaps ]]
 require("globals")
 require("keymap")
-require("completion")
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
