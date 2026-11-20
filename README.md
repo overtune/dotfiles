@@ -1,45 +1,82 @@
 # dotfiles
 
-My dotfiles, deployed with [mise](https://mise.jdx.dev/dotfiles.html).
+My macOS dotfiles, managed with [mise](https://mise.jdx.dev/dotfiles.html).
 The repo is the source of truth: mise symlinks each file into place, so
 editing `~/.zshrc` edits `zsh/zshrc` here. Commit and push as usual.
 
 | Folder           | Deployed to                                                                        |
 | ---------------- | ---------------------------------------------------------------------------------- |
 | `zsh/`           | `~/.zshrc`, `~/.zshenv`                                                            |
-| `tmux/`          | `~/.tmux.conf`, `~/.tmux-osx.conf`                                                 |
+| `tmux/`          | `~/.tmux.conf`                                                                     |
 | `nvim-overtune/` | `~/.config/nvim-overtune` (run with `NVIM_APPNAME=nvim-overtune nvim`, alias `v`) |
 | `mise/`          | `~/.config/mise/config.toml` (global tools)                                        |
 
-The mapping lives in [`mise.toml`](mise.toml).
+Everything is declared in [`mise.toml`](mise.toml): the `[dotfiles]` mapping,
+plus the Homebrew packages and git repos that `mise bootstrap` installs.
 
 ## New machine
 
 ```sh
-# 1. Install mise: https://mise.jdx.dev/getting-started.html
-# 2. Clone (uses the overtune SSH alias, see below)
-git clone git@github-overtune:overtune/dotfiles.git ~/dotfiles
+# 1. Homebrew and mise (https://brew.sh)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+brew install mise
+
+# 2. Clone over HTTPS (the repo is public; switch to SSH later, see below)
+git clone https://github.com/overtune/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-# 3. Deploy
+
+# 3. Install packages, clone oh-my-zsh and tmux-themepack, deploy the
+#    dotfiles and install global tools. mise refuses to overwrite existing
+#    files, so move any default ~/.zshrc etc. out of the way first.
 mise trust
-mise dot apply --dry-run
-mise dot apply          # refuses to overwrite existing files; move them away first
-mise dot status
-# 4. Install global tools
-mise install
+mise bootstrap --dry-run
+mise bootstrap
+
+# 4. Start a new shell
+exec zsh
 ```
 
-Not in this repo, install separately:
+`mise bootstrap` is safe to re-run: anything already in place is left alone.
+`mise bootstrap plan` shows what it would change.
 
-- [oh-my-zsh](https://ohmyz.sh/)
-- [tpm](https://github.com/tmux-plugins/tpm) for tmux plugins:
-  `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`, then `prefix + I` in tmux
-- [fnm](https://github.com/Schniz/fnm), fzf, thefuck (used by `.zshrc`)
+### Manual steps
+
+Things `mise bootstrap` does not cover:
+
+- **Node:** fnm manages Node, but no version is installed yet. Run
+  `fnm install --lts` (the first version you install becomes the default).
+- **nvim dependencies:** run `nvim-overtune/install-dependencies.sh` (needs
+  Node). Language servers install through Mason on the first nvim start.
+- **Casks from third-party taps:** `brew install --cask simpel/tap/ruler`.
+- **SSH and git config:** `~/.ssh/config`, the SSH keys and `~/.gitconfig`
+  are not in this repo. Set them up as described under
+  [GitHub access](#github-access).
+
+## Day to day
+
+```sh
+mise dot status                 # are all dotfiles linked?
+mise bootstrap --dry-run        # anything missing on this machine?
+mise bootstrap --update         # also fast-forward oh-my-zsh and themepack
+```
+
+To add a dotfile, move it into the repo and let mise link it back:
+
+```sh
+cd ~/dotfiles
+mise dot add --local --source <folder>/<name> ~/.<file>
+```
+
+To add a Homebrew package, add a line under `[bootstrap.packages]` in
+`mise.toml`, e.g. `"brew:jq" = "latest"` or `"brew-cask:slack" = "latest"`,
+then run `mise bootstrap`.
 
 ## GitHub access
 
 This machine has two GitHub accounts. Plain `git@github.com` authenticates
-as the wrong one, so the remote uses a host alias in `~/.ssh/config`:
+as the wrong one, so pushing uses a host alias in `~/.ssh/config`:
 
 ```
 Host github-overtune
@@ -48,9 +85,8 @@ Host github-overtune
   IdentityFile ~/.ssh/id_ed25519_overtune
 ```
 
-## Adding a file
+With that in place, switch the clone to SSH:
 
 ```sh
-cd ~/dotfiles
-mise dot add --local --source <folder>/<name> ~/.<file>
+git -C ~/dotfiles remote set-url origin git@github-overtune:overtune/dotfiles.git
 ```
