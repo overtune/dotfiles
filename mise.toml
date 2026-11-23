@@ -18,38 +18,50 @@
 "~/.tmux-themepack"  = { url = "https://github.com/jimeh/tmux-themepack.git" }
 
 [bootstrap.packages]
-"brew:azure-cli" = "latest"
-"brew:fd" = "latest"
-"brew:fff" = "latest"
-"brew:ffmpeg" = "latest"
-"brew:fzf" = "latest"
-"brew:gh" = "latest"
-"brew:go" = "latest"
-"brew:helm" = "latest"
-"brew:k3d" = "latest"
-"brew:k6" = "latest"
-"brew:kubeconform" = "latest"
-"brew:lazydocker" = "latest"
-"brew:lazygit" = "latest"
-"brew:luarocks" = "latest"
-"brew:neovim" = "latest"
-"brew:nnn" = "latest"
-"brew:opencode" = "latest"
-"brew:pandoc" = "latest"
-"brew:ripgrep" = "latest"
-"brew:poppler" = "latest"
-"brew:tectonic" = "latest"
-"brew:thefuck" = "latest"
-"brew:tmux" = "latest"
-"brew:tree-sitter" = "latest"
-"brew:tree-sitter-cli" = "latest"
-"brew:wget" = "latest"
+# Removing a line only stops new machines from getting the package; mise
+# never uninstalls anything. Remove it here and run `brew uninstall <name>`
+# if you also want it gone from this machine.
+# [setup] = used by these dotfiles (zsh, tmux or nvim); keep these.
 
-"brew-cask:claude-devtools" = "latest"
-"brew-cask:docker-desktop" = "latest"
-"brew-cask:git-credential-manager" = "latest"
-"brew-cask:iterm2" = "latest"
-"brew-cask:mitmproxy" = "latest"
-"brew-cask:pgadmin4" = "latest"
-"brew-cask:raycast" = "latest"
-"brew-cask:visual-studio-code" = "latest"
+# --- Shell and editor [setup] ---
+"brew:neovim" = "latest"           # [setup] the editor
+"brew:tmux" = "latest"             # [setup] terminal multiplexer
+"brew:fzf" = "latest"              # [setup] fuzzy finder: Ctrl-R/Ctrl-T in zsh
+"brew:fd" = "latest"               # [setup] fast `find`: fzf and Telescope file search
+"brew:ripgrep" = "latest"          # [setup] fast grep (rg): Telescope live grep, Spectre
+"brew:tree-sitter-cli" = "latest"  # [setup] builds the nvim-treesitter parsers
+"brew:thefuck" = "latest"          # [setup] `fuck` fixes the last mistyped command
+
+# --- Git and GitHub ---
+"brew:gh" = "latest"               # GitHub CLI: PRs, issues, auth
+"brew:lazygit" = "latest"          # terminal UI for git
+
+# --- Containers and Kubernetes ---
+"brew:lazydocker" = "latest"       # terminal UI for Docker containers and logs
+# "brew:helm" = "latest"             # Kubernetes package manager (charts)
+# "brew:k3d" = "latest"              # runs a local k3s Kubernetes cluster in Docker
+# "brew:kubeconform" = "latest"      # validates Kubernetes YAML manifests
+
+# --- Cloud and testing ---
+"brew:azure-cli" = "latest"        # `az`, the Azure command line
+"brew:k6" = "latest"               # load testing with JavaScript scripts
+
+# --- Documents and media ---
+# "brew:pandoc" = "latest"           # converts between Markdown, Word, HTML, PDF etc.
+# "brew:tectonic" = "latest"         # LaTeX engine; pandoc uses it for PDF output
+# "brew:poppler" = "latest"          # PDF tools: pdftotext, pdftoppm, pdfinfo
+# "brew:ffmpeg" = "latest"           # converts and edits video and audio
+
+# --- Misc CLI ---
+# "brew:opencode" = "latest"         # AI coding agent in the terminal
+"brew:wget" = "latest"             # downloads files over HTTP
+
+# --- Apps (casks) ---
+"brew-cask:iterm2" = "latest"                  # terminal
+# "brew-cask:raycast" = "latest"                 # launcher, Spotlight replacement
+# "brew-cask:visual-studio-code" = "latest"      # editor
+"brew-cask:docker-desktop" = "latest"          # Docker engine and GUI
+"brew-cask:git-credential-manager" = "latest"  # stores git HTTPS logins (e.g. Azure DevOps)
+# "brew-cask:pgadmin4" = "latest"                # PostgreSQL admin GUI
+# "brew-cask:mitmproxy" = "latest"               # inspects HTTP(S) traffic as a proxy
+# "brew-cask:claude-devtools" = "latest"         # visualises Claude Code sessions

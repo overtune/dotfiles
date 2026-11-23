@@ -23,12 +23,6 @@ export VISUAL="$EDITOR"
 export DOCS_PATH="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Docs/"
 
 # --- Functions -------------------------------------------------------------
-# fff file manager: cd into the directory it was in when it exits.
-f() {
-  fff "$@"
-  cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
-}
-
 # Lazy-load thefuck: avoid spawning Python on every shell start.
 fuck() {
   unset -f fuck
