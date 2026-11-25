@@ -43,7 +43,7 @@
 # "brew:kubeconform" = "latest"      # validates Kubernetes YAML manifests
 
 # --- Cloud and testing ---
-"brew:azure-cli" = "latest"        # `az`, the Azure command line
+"brew-cask:azure-cli" = "latest"        # `az`, the Azure command line
 "brew:k6" = "latest"               # load testing with JavaScript scripts
 
 # --- Documents and media ---
