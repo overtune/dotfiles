@@ -32,8 +32,6 @@ fuck() {
 
 # --- Tools -----------------------------------------------------------------
 export PATH="$HOME/.local/bin:$PATH"
-# LM Studio CLI (lms)
-export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # mise manages Node and other runtimes, and switches versions on cd
 # (it reads .nvmrc / .node-version, see ~/.config/mise/config.toml).
